@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110308032120) do
+ActiveRecord::Schema.define(:version => 20110308032258) do
 
   create_table "agents", :force => true do |t|
     t.string   "name"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(:version => 20110308032120) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password"
+  end
+
+  create_table "checkpoints", :force => true do |t|
+    t.float    "lat"
+    t.float    "long"
+    t.integer  "data_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

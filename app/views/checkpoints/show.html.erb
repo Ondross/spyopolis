@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Lat:</b>
+  <%= @checkpoint.lat %>
+</p>
+
+<p>
+  <b>Long:</b>
+  <%= @checkpoint.long %>
+</p>
+
+<p>
+  <b>Data:</b>
+  <%= @checkpoint.data_count %>
+</p>
+
+
+<%= link_to 'Edit', edit_checkpoint_path(@checkpoint) %> |
+<%= link_to 'Back', checkpoints_path %>

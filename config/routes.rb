@@ -1,4 +1,6 @@
 Spyopolis::Application.routes.draw do
+  resources :checkpoints
+
   resources :agents
 
   # The priority is based upon order of creation:
