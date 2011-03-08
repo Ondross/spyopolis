@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @agent.name %>
+</p>
+
+<p>
+  <b>Carrier:</b>
+  <%= @agent.carrier %>
+</p>
+
+<p>
+  <b>Team:</b>
+  <%= @agent.team %>
+</p>
+
+<p>
+  <b>Lat:</b>
+  <%= @agent.lat %>
+</p>
+
+<p>
+  <b>Long:</b>
+  <%= @agent.long %>
+</p>
+
+<p>
+  <b>Data count:</b>
+  <%= @agent.data_count %>
+</p>
+
+<p>
+  <b>Emp:</b>
+  <%= @agent.emp %>
+</p>
+
+<p>
+  <b>Locked:</b>
+  <%= @agent.locked %>
+</p>
+
+
+<%= link_to 'Edit', edit_agent_path(@agent) %> |
+<%= link_to 'Back', agents_path %>

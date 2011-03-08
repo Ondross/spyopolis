@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  carrier: false
+  team: 1
+  lat: 1.5
+  long: 1.5
+  data_count: 1
+  emp: false
+  locked: false
+
+two:
+  name: MyString
+  carrier: false
+  team: 1
+  lat: 1.5
+  long: 1.5
+  data_count: 1
+  emp: false
+  locked: false

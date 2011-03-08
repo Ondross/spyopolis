@@ -1,0 +1,37 @@
+<h1>Listing agents</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Carrier</th>
+    <th>Team</th>
+    <th>Lat</th>
+    <th>Long</th>
+    <th>Data count</th>
+    <th>Emp</th>
+    <th>Locked</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @agents.each do |agent| %>
+  <tr>
+    <td><%= agent.name %></td>
+    <td><%= agent.carrier %></td>
+    <td><%= agent.team %></td>
+    <td><%= agent.lat %></td>
+    <td><%= agent.long %></td>
+    <td><%= agent.data_count %></td>
+    <td><%= agent.emp %></td>
+    <td><%= agent.locked %></td>
+    <td><%= link_to 'Show', agent %></td>
+    <td><%= link_to 'Edit', edit_agent_path(agent) %></td>
+    <td><%= link_to 'Destroy', agent, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Agent', new_agent_path %>
