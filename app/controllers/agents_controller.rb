@@ -76,7 +76,7 @@ class AgentsController < ApplicationController
 	
     respond_to do |format|
       if @agent.save
-        format.html { redirect_to(@agent, :notice => 'Agent was successfully created.') }
+        format.html { redirect_to(:json, :notice => 'Agent was successfully updated.') }
         format.xml  { render :xml => @agent, :status => :created, :location => @agent }
 		format.json  { render :json => @agent,  :status => :created, :location => @agent}
       else
