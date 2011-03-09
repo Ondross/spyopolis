@@ -5,6 +5,15 @@ class AgentsController < ApplicationController
   def index
     @agents = Agent.all
 
+	@agents.each do |agent|
+	if agent.locked
+		if Time.now.seconds_since_midnight - agent.locktime > 30
+			agent.locked = false
+			agent.save!
+		end
+	end
+	end
+	
     respond_to do |format|
 	  format.json  { render :json => @agents }
       format.html # index.html.erb
@@ -87,6 +96,13 @@ class AgentsController < ApplicationController
 	
 	update_result = @agent.update_attributes(params[:agent])
 
+	if @agent.locked
+		if Time.now.seconds_since_midnight - @agent.locktime > 30
+			@agent.locked = false
+			@agent.save!
+		end
+	end
+	
 	if @agent.locked == true	
 		update_result = @agent.update_attributes(params[:agent].except(:lat, :long))
 	end	
