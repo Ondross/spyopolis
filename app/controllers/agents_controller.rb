@@ -8,7 +8,7 @@ class AgentsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @agents }
-	  format.json  { render :json => @agent }
+	  format.json  { render :json => @agents }
     end
   end
 
@@ -47,13 +47,13 @@ class AgentsController < ApplicationController
   def create
     @agent = Agent.new(params[:agent])
 	
-	if Agent.all.length == 0 or Agent.all.length == 2
+	if Agent.all.length == 0 or Agent.all.length == 1
 		@agent.carrier = true
 	else
 		@agent.carrier = false
 	end
 	
-	if Agent.all.length < 2
+	if Agent.all.length % 2 == 1
 		@agent.team = 0
 	else
 		@agent.team = 1
@@ -84,9 +84,21 @@ class AgentsController < ApplicationController
 	# for me:
 	#    update_result = @me.update_attributes( params[:agent].merge( {:locked => true}) )
 	# elsle update result is just update attributes (params[:agent])	
+	
+	update_result = @agent.update_attributes(params[:agent])
+	Agent.all.each do |victim|
+		if victim != @agent
+			if victim.carrier == false
+				victim.update_attributes(:locked => true, :locktime => Time.now.seconds_since_midnight)
+			end
+		else
+			update_result = @agent.update_attributes(params[:agent].merge( {:locked => true, :locktime => Time.now.seconds_since_midnight}) )
+		end
+	end
+			
 		
     respond_to do |format|
-      if @agent.update_attributes(params[:agent])  #if update result
+      if update_result  #if update result
 	 
 		
         format.html { redirect_to(@agent, :notice => 'Agent was successfully updated.') }

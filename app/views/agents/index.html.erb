@@ -10,6 +10,7 @@
     <th>Data count</th>
     <th>Emp</th>
     <th>Locked</th>
+	<th>Locktime</th>
     <th></th>
     <th></th>
     <th></th>
@@ -24,7 +25,8 @@
     <td><%= agent.long %></td>
     <td><%= agent.data_count %></td>
     <td><%= agent.emp %></td>
-    <td><%= agent.dead %></td>
+    <td><%= agent.locked %></td>
+	<td><%= agent.locktime %></td>
     <td><%= link_to 'Show', agent %></td>
     <td><%= link_to 'Edit', edit_agent_path(agent) %></td>
     <td><%= link_to 'Destroy', agent, :confirm => 'Are you sure?', :method => :delete %></td>
