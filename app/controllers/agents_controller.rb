@@ -6,9 +6,9 @@ class AgentsController < ApplicationController
     @agents = Agent.all
 
     respond_to do |format|
+	  format.json  { render :json => @agents }
       format.html # index.html.erb
       format.xml  { render :xml => @agents }
-	  format.json  { render :json => @agents }
     end
   end
 
@@ -80,28 +80,37 @@ class AgentsController < ApplicationController
 
 	# put EMP logic here to calculate     Don't lock carriers.
 	# for all other Agents
-	#    if locking, @other_agent.update_attributes( :locked => true )
+	   # if locking, @other_agent.update_attributes( :locked => true )
 	# for me:
-	#    update_result = @me.update_attributes( params[:agent].merge( {:locked => true}) )
-	# elsle update result is just update attributes (params[:agent])	
+	   # update_result = @me.update_attributes( params[:agent].merge( {:locked => true}) )
+	# else update result is just update attributes (params[:agent])	
 	
 	update_result = @agent.update_attributes(params[:agent])
-	Agent.all.each do |victim|
-		if victim != @agent
-			if victim.carrier == false
-				victim.update_attributes(:locked => true, :locktime => Time.now.seconds_since_midnight)
+
+	if @agent.locked == true	
+		update_result = @agent.update_attributes(params[:agent].except(:lat, :long))
+	end	
+	
+	if @agent.emp == true
+		Agent.all.each do |victim|
+			if victim != @agent
+				if Math.sqrt((victim.lat - @agent.lat)**2 + (victim.long - @agent.long)**2) < 0.00004
+					if victim.carrier == false
+						victim.update_attributes(:locked => true, :locktime => Time.now.seconds_since_midnight)
+					end
+				end
+			else
+				update_result = @agent.update_attributes(params[:agent].merge( {:locked => true, :emp => false, :locktime => Time.now.seconds_since_midnight}) )
 			end
-		else
-			update_result = @agent.update_attributes(params[:agent].merge( {:locked => true, :locktime => Time.now.seconds_since_midnight}) )
 		end
 	end
-			
+
 		
     respond_to do |format|
       if update_result  #if update result
 	 
 		
-        format.html { redirect_to(@agent, :notice => 'Agent was successfully updated.') }
+        format.html { redirect_to(:json, :notice => 'Agent was successfully updated.') }
         format.xml  { head :ok }
 		format.json  { head :ok }
       else
