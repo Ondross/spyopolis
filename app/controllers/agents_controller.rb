@@ -68,6 +68,11 @@ class AgentsController < ApplicationController
 		@agent.team = 1
 	end
 	
+	@agent.lat = 0
+	@agent.long = 0
+	@agent.locktime = 0
+	@agent.data_count = 100
+	
 	
     respond_to do |format|
       if @agent.save
